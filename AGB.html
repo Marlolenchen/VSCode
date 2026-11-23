@@ -20,8 +20,24 @@
         main { width: min(900px, calc(100% - 32px)); margin: 32px auto; padding: 32px; background: beige; line-height: 1.55; }
         h1 { margin-top: 0; }
         @media (max-width: 600px) {
-            body { background-image: url('Titelbild_mobile.jpg'); }
+            body {
+                display: flex;
+                flex-direction: column;
+                background: green;
+            }
+            body::before {
+                content: "";
+                display: block;
+                order: 1;
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                background: url('Titelbild.jpg') center / cover no-repeat;
+            }
             nav {
+                order: 0;
+            }
+            main {
+                order: 2;
                 min-height: 48px;
                 justify-content: center;
                 gap: clamp(8px, 2.5vw, 14px);

@@ -170,7 +170,11 @@
 
             @media (max-width: 640px) {
                 body {
-                    background-image:url('Titelbild_mobile.jpg');
+                    background-image:url('Titelbild.jpg');
+                    background-position:center 90px;
+                    background-size:100% auto;
+                    background-repeat:no-repeat;
+                    background-attachment:scroll;
                 }
 
                 .banner {
@@ -186,7 +190,25 @@
                 }
 
                 .banner > h1 {
-                    font-size:30px !important;
+                    margin:8px 0 4px;
+                    font-size:26px !important;
+                }
+
+                .banner > img {
+                    width:38% !important;
+                }
+
+                .banner > h3 {
+                    margin:6px 0 0;
+                }
+
+                .banner > h3 br {
+                    display:none;
+                }
+
+                .instagram-link {
+                    width:40px;
+                    height:40px;
                 }
 
                 .abschnitt {
