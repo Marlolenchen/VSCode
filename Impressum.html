@@ -11,6 +11,7 @@
         body { margin: 0; color: #171717; font-family: Calibri, Arial, sans-serif; background: green url('Titelbild.jpg') center / cover fixed no-repeat; }
         nav { position: sticky; top: 0; z-index: 1; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; min-height: 100px; padding: 14px; background: green; }
         nav a { color: black; transition: transform 160ms ease; }
+        nav a[aria-current="page"] { font-size: 1.15em; font-weight: bold; }
         nav a:link, nav a:visited, nav a:hover, nav a:focus-visible, nav a:active { color: black; }
         nav a:hover, nav a:focus-visible { transform: scale(1.08); }
         nav .home-logo-link { position: absolute; top: 0; bottom: 0; left: max(16px, calc((100% - 900px) / 2)); height: fit-content; margin-block: auto; display: inline-flex; align-items: center; justify-content: center; padding: 8px; background: white; }
@@ -35,14 +36,12 @@
             }
             nav {
                 order: 0;
-            }
-            main {
-                order: 2;
                 min-height: 48px;
-                justify-content: center;
+                justify-content: flex-end;
                 gap: clamp(8px, 2.5vw, 14px);
                 padding: 10px 12px 10px 76px;
             }
+            main { order: 2; }
             nav .home-logo-link { left: 12px; }
             nav .home-logo { width: clamp(36px, 10vw, 42px); }
             main { padding: 22px; }
@@ -56,7 +55,7 @@
         <a class="home-logo-link" href="index.html" aria-label="Startseite" title="Zurück zur Startseite">
             <img class="home-logo" src="Logo.png" alt="Grossenbacher-Oberthal">
         </a>
-        <a href="Impressum.html">Impressum</a>
+        <a href="Impressum.html" aria-current="page">Impressum</a>
         <a href="Datenschutz.html">Datenschutz</a>
         <a href="AGB.html">AGB</a>
     </nav>
