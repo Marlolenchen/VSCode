@@ -667,16 +667,25 @@
 
             document.getElementById("galerie-zurueck").addEventListener("click", () => zeigeBild(aktuellesBild - 1));
             document.getElementById("galerie-weiter").addEventListener("click", () => zeigeBild(aktuellesBild + 1));
-            document.getElementById("galerie-bild-vorheriger").addEventListener("click", () => zeigeBild(aktuellesBild - 1));
-            document.getElementById("galerie-bild-naechstes").addEventListener("click", () => zeigeBild(aktuellesBild + 1));
+            let wischUnterdrueckenBis = 0;
+            const bildVorheriger = document.getElementById("galerie-bild-vorheriger");
+            const bildNaechstes = document.getElementById("galerie-bild-naechstes");
+
+            bildVorheriger.addEventListener("click", () => {
+                if (Date.now() >= wischUnterdrueckenBis) zeigeBild(aktuellesBild - 1);
+            });
+            bildNaechstes.addEventListener("click", () => {
+                if (Date.now() >= wischUnterdrueckenBis) zeigeBild(aktuellesBild + 1);
+            });
 
             let wischStartX = null;
+            const galerieBildBereich = document.querySelector(".galerie-bild-bereich");
 
-            galerieBild.addEventListener("touchstart", (event) => {
+            galerieBildBereich.addEventListener("touchstart", (event) => {
                 wischStartX = event.changedTouches[0].clientX;
             }, { passive: true });
 
-            galerieBild.addEventListener("touchend", (event) => {
+            galerieBildBereich.addEventListener("touchend", (event) => {
                 if (wischStartX === null) return;
 
                 const wischEndX = event.changedTouches[0].clientX;
@@ -684,6 +693,7 @@
                 wischStartX = null;
 
                 if (Math.abs(wischDistanz) < 50) return;
+                wischUnterdrueckenBis = Date.now() + 500;
                 zeigeBild(wischDistanz < 0 ? aktuellesBild + 1 : aktuellesBild - 1);
             }, { passive: true });
 
