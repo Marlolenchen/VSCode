@@ -153,6 +153,10 @@
                 background:#e5e5e5;
             }
 
+            .galerie-kopf form {
+                margin:0;
+            }
+
             .galerie-bild {
                 display:block;
                 width:100%;
@@ -160,6 +164,44 @@
                 margin:20px auto;
                 object-fit:contain;
                 background:#171717;
+                touch-action:pan-y;
+            }
+
+            .galerie-bild-bereich {
+                position:relative;
+                margin:20px 0;
+            }
+
+            .galerie-bild-bereich .galerie-bild {
+                position:relative;
+                z-index:1;
+                margin:0 auto;
+            }
+
+            .galerie-bildbereich-klick {
+                position:absolute;
+                top:0;
+                bottom:0;
+                width:50%;
+                z-index:2;
+                padding:0 !important;
+                border:0 !important;
+                border-radius:0 !important;
+                background:transparent !important;
+                cursor:pointer;
+            }
+
+            .galerie-bildbereich-klick:focus-visible {
+                outline:3px solid white;
+                outline-offset:-6px;
+            }
+
+            #galerie-bild-vorheriger {
+                left:0;
+            }
+
+            #galerie-bild-naechstes {
+                right:0;
             }
 
             .galerie-zaehler {
@@ -174,7 +216,7 @@
                     background-position:center 90px;
                     background-size:100% auto;
                     background-repeat:no-repeat;
-                    background-attachment:scroll;
+                    background-attachment:fixed;
                 }
 
                 .banner {
@@ -485,7 +527,11 @@
                     <button type="submit" aria-label="Galerie schliessen">Schliessen</button>
                 </form>
             </div>
-            <img class="galerie-bild" id="galerie-bild" alt="">
+            <div class="galerie-bild-bereich">
+                <img class="galerie-bild" id="galerie-bild" alt="">
+                <button class="galerie-bildbereich-klick" id="galerie-bild-vorheriger" type="button" aria-label="Vorheriges Bild"></button>
+                <button class="galerie-bildbereich-klick" id="galerie-bild-naechstes" type="button" aria-label="Nächstes Bild"></button>
+            </div>
             <div class="galerie-steuerung">
                 <button type="button" id="galerie-zurueck">Zurück</button>
                 <span class="galerie-zaehler" id="galerie-zaehler" aria-live="polite"></span>
@@ -621,6 +667,25 @@
 
             document.getElementById("galerie-zurueck").addEventListener("click", () => zeigeBild(aktuellesBild - 1));
             document.getElementById("galerie-weiter").addEventListener("click", () => zeigeBild(aktuellesBild + 1));
+            document.getElementById("galerie-bild-vorheriger").addEventListener("click", () => zeigeBild(aktuellesBild - 1));
+            document.getElementById("galerie-bild-naechstes").addEventListener("click", () => zeigeBild(aktuellesBild + 1));
+
+            let wischStartX = null;
+
+            galerieBild.addEventListener("touchstart", (event) => {
+                wischStartX = event.changedTouches[0].clientX;
+            }, { passive: true });
+
+            galerieBild.addEventListener("touchend", (event) => {
+                if (wischStartX === null) return;
+
+                const wischEndX = event.changedTouches[0].clientX;
+                const wischDistanz = wischEndX - wischStartX;
+                wischStartX = null;
+
+                if (Math.abs(wischDistanz) < 50) return;
+                zeigeBild(wischDistanz < 0 ? aktuellesBild + 1 : aktuellesBild - 1);
+            }, { passive: true });
 
             galerieDialog.addEventListener("click", (event) => {
                 if (event.target === galerieDialog) galerieDialog.close();

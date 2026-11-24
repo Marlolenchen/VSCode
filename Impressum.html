@@ -24,24 +24,28 @@
             body {
                 display: flex;
                 flex-direction: column;
-                background: green;
-            }
-            body::before {
-                content: "";
-                display: block;
-                order: 1;
-                width: 100%;
-                aspect-ratio: 16 / 9;
-                background: url('Titelbild.jpg') center / cover no-repeat;
+                background: green url('Titelbild.jpg') no-repeat fixed;
+                background-position: center 48px;
+                background-size: 100% auto;
             }
             nav {
                 order: 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
                 min-height: 48px;
                 justify-content: flex-end;
                 gap: clamp(8px, 2.5vw, 14px);
                 padding: 10px 12px 10px 76px;
             }
-            main { order: 2; }
+            main {
+                order: 2;
+                position: relative;
+                z-index: 2;
+                margin-top: calc(48px + (100vw * 9 / 16));
+            }
             nav .home-logo-link { left: 12px; }
             nav .home-logo { width: clamp(36px, 10vw, 42px); }
             main { padding: 22px; }
